@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1388534400000,
+        "exercises":  [{"name": "Tåhev",
+                        "resistance": "40"},
+                      {"name": "Benkpress",
+                        "name": "50"}]
+    },
+    {
+        "id": 1388534800000,
+        "exercises":  [{"name": "Skråbenk",
+                        "resistance": "20"},
+                      {"name": "Nedtrekk",
+                        "name": "35"}]
+    }
+]

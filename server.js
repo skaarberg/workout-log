@@ -18,6 +18,7 @@ var app = express();
 
 var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 var EXERCISES_FILE = path.join(__dirname, 'exercises.json');
+var WORKOUTS_FILE = path.join(__dirname, 'workouts.json');
 
 app.set('port', (process.env.PORT || 3000));
 
@@ -53,6 +54,42 @@ app.get('/api/exercises', function(req, res) {
       process.exit(1);
     }
     res.json(JSON.parse(data));
+  });
+});
+
+app.get('/api/workouts', function(req, res) {
+  fs.readFile(WORKOUTS_FILE, function(err, data) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    res.json(JSON.parse(data));
+  });
+});
+
+app.post('/api/exercises', function(req, res) {
+  fs.readFile(EXERCISES_FILE, function(err, data) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    var exercises = JSON.parse(data);
+    // NOTE: In a real implementation, we would likely rely on a database or
+    // some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
+    // treat Date.now() as unique-enough for our purposes.
+    var newExercise = {
+      id: Date.now(),
+      name: req.body.name,
+      groups: req.body.groups,
+    };
+    exercises.push(newExercise);
+    fs.writeFile(EXERCISES_FILE, JSON.stringify(exercises, null, 4), function(err) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      res.json(exercises);
+    });
   });
 });
 
