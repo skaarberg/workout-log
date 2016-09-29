@@ -37,7 +37,6 @@
           cache: false,
           success: function(data) {
             this.setState({workoutData: data});
-            //console.log(this.state.workoutData);
           }.bind(this),
           error: function(xhr, status, err) {
             console.error(this.props.urlWorkout, status, err.toString());
@@ -67,11 +66,15 @@
         setInterval(this.loadExercisesFromServer, this.props.pollInterval);
       },
       render: function() {
-
+        if(this.state.workoutData!=null){
+          console.log(this.state.workoutData[0].id);
+          //console.log(JSON.parse(this.state.workoutData));
+        }
         return (
           <div className="exerciseBox">
             <h1>Exercises:D</h1>
             <ExerciseList data={this.state.data} />
+            <WorkoutList data={this.state.workoutData} />
             <ExerciseForm onExerciseSubmit={this.handleExerciseSubmit} />
           </div>
         );
@@ -90,6 +93,27 @@
           return (
             <div className="exerciseList">
               {exerciseNodes}
+            </div>
+          );
+        }
+      });
+
+      var WorkoutList = React.createClass({
+
+          render: function(){
+            if(this.props.data!=null){
+              var workoutNodes = this.props.data.map(function(workout) {
+                return(
+                  <Workout id={workout.id} key={workout.id}>
+                    {workout.id}
+                  </Workout>
+                );
+              });
+            }
+
+          return (
+            <div className="workoutList">
+              {workoutNodes}
             </div>
           );
         }
@@ -143,6 +167,16 @@
               <b>{this.props.name}</b>
               <div>{this.props.children}</div>
               <div>--------------</div>
+            </div>
+          );
+        }
+      });
+
+      var Workout = React.createClass({
+        render: function(){
+          return (
+            <div className="workout">
+              <b>{this.props.id}</b>
             </div>
           );
         }

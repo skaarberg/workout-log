@@ -7,10 +7,10 @@
                         "name": "50"}]
     },
     {
-        "id": 1388534800000,
-        "exercises":  [{"name": "Skråbenk",
-                        "resistance": "20"},
-                      {"name": "Nedtrekk",
-                        "name": "35"}]
-    }
+      "id": 1388538800000,
+      "exercises":[
+        {"name":"Skråbenk", "resistance":"20"},
+        {"name":"Nedtrekk", "resistance":"35"}
+      ]
+  }
 ]
