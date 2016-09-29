@@ -30,6 +30,20 @@
           }.bind(this)
         });
       },
+      loadWorkoutsFromServer: function() {
+        $.ajax({
+          url: this.props.urlWorkout,
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+            this.setState({workoutData: data});
+            //console.log(this.state.workoutData);
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.urlWorkout, status, err.toString());
+          }.bind(this)
+        });
+      },
       handleExerciseSubmit: function(exercise) {
         $.ajax({
           url: this.props.url,
@@ -49,6 +63,7 @@
       },
       componentDidMount: function() {
         this.loadExercisesFromServer();
+        this.loadWorkoutsFromServer();
         setInterval(this.loadExercisesFromServer, this.props.pollInterval);
       },
       render: function() {
@@ -75,7 +90,6 @@
           return (
             <div className="exerciseList">
               {exerciseNodes}
-              ting
             </div>
           );
         }
@@ -135,7 +149,7 @@
       });
 
       ReactDOM.render(
-        <ExerciseBox url="/api/exercises" pollInterval={2000}/>,
+        <ExerciseBox url="/api/exercises" urlWorkout="/api/workouts" pollInterval={2000}/>,
         document.getElementById('content')
       );
 
