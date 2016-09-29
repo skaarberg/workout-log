@@ -81,6 +81,7 @@ app.post('/api/exercises', function(req, res) {
       id: Date.now(),
       name: req.body.name,
       groups: req.body.groups,
+      resistance: req.body.restistance,
     };
     exercises.push(newExercise);
     fs.writeFile(EXERCISES_FILE, JSON.stringify(exercises, null, 4), function(err) {

@@ -2,26 +2,31 @@
     {
         "id": 1388534400000,
         "name": "Nedtrekk",
-        "groups": "Rygg, biceps"
+        "groups": "Rygg, biceps",
+        "resistance": "40"
     },
     {
         "id": 1420070400000,
         "name": "Tåhev",
-        "groups": "Legg bakside, lår bakside"
+        "groups": "Legg bakside, lår bakside",
+        "resistance": "0"
     },
     {
         "id": 1475079923248,
         "name": "Bicepscurl",
-        "groups": "Biceps"
+        "groups": "Biceps",
+        "resistance": "12,5"
     },
     {
         "id": 1475079925782,
         "name": "Benkpress",
-        "groups": "Bryst, triceps"
+        "groups": "Bryst, triceps",
+        "resistance": "40"
     },
     {
         "id": 1475090999256,
         "name": "Nedpress",
-        "groups": "Triceps"
+        "groups": "Triceps",
+        "resistance": "25"
     }
 ]
