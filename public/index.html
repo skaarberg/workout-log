@@ -66,10 +66,6 @@
         setInterval(this.loadExercisesFromServer, this.props.pollInterval);
       },
       render: function() {
-        if(this.state.workoutData!=null){
-          console.log(this.state.workoutData[0].id);
-          //console.log(JSON.parse(this.state.workoutData));
-        }
         return (
           <div className="exerciseBox">
             <h1>Exercises:D</h1>
@@ -104,7 +100,7 @@
             if(this.props.data!=null){
               var workoutNodes = this.props.data.map(function(workout) {
                 return(
-                  <Workout id={workout.id} key={workout.id}>
+                  <Workout id={workout.id} key={workout.id} exercises={workout.exercises}>
                     {workout.id}
                   </Workout>
                 );
@@ -174,9 +170,10 @@
 
       var Workout = React.createClass({
         render: function(){
+          console.log(this.props);
           return (
             <div className="workout">
-              <b>{this.props.id}</b>
+              - <b>{this.props.id}</b>
             </div>
           );
         }
