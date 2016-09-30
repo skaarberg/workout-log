@@ -239,9 +239,11 @@
           return (
             <div className="chooseExercise">
               <b>{this.props.name}</b>
-              <div>{this.props.groups}</div>
+              <div id="box">
+                <div id="left">{this.props.groups}</div>
+                <div id='cBtn'><ChosenButton /></div><br />
+              </div>
               <div>{this.props.resistance} kg</div>
-              <div id='cBtn'><ChosenButton /></div>
             </div>
           );
         }
@@ -281,8 +283,8 @@
         },
         render: function() {
           return (
-            <div className="exerciseChooseListBox">
-              <h1>Liste</h1>
+            <div id="chooseBox" className="exerciseChooseListBox">
+              <h1>Liste over tilgjengelige øvelser</h1>
               <ChooseExerciseList data={this.state.data} />
             </div>
           );

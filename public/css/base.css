@@ -59,5 +59,18 @@ ul {
 }
 
 #cBtn {
-  text-align: center;
+  float: right;
+}
+
+#box {
+  width: 100%;
+}
+
+#left {
+  float: left;
+}
+
+#chooseBox {
+  max-width: 600px;
+  margin: auto;
 }
