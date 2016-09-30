@@ -142,8 +142,25 @@
         }
       });
 
-      var WorkoutList = React.createClass({
+      var ChooseExerciseList = React.createClass({
+        render: function(){
+          var exerciseNodes = this.props.data.map(function(exercise) {
+            return(
+              <ChooseExercise name={exercise.name} key={exercise.id} groups={exercise.groups} resistance={exercise.resistance}>
+                {exercise.groups}
+              </ChooseExercise>
+            );
+          });
+          return (
+            <div className="chooseExerciseList">
+              {exerciseNodes}
+              <div>TING!</div>
+            </div>
+          );
+        }
+      });
 
+      var WorkoutList = React.createClass({
           render: function(){
             if(this.props.data!=null){
               var workoutNodes = this.props.data.map(function(workout) {
@@ -217,6 +234,19 @@
         }
       });
 
+      var ChooseExercise = React.createClass({
+        render: function(){
+          return (
+            <div className="chooseExercise">
+              <b>{this.props.name}</b>
+              <div>{this.props.groups}</div>
+              <div>{this.props.resistance} kg</div>
+              <div id='cBtn'><ChosenButton /></div>
+            </div>
+          );
+        }
+      });
+
       var Workout = React.createClass({
         render: function(){
           return (
@@ -253,7 +283,7 @@
           return (
             <div className="exerciseChooseListBox">
               <h1>Liste</h1>
-              <ExerciseList data={this.state.data} />
+              <ChooseExerciseList data={this.state.data} />
             </div>
           );
         }
