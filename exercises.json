@@ -28,5 +28,11 @@
         "name": "Nedpress",
         "groups": "Triceps",
         "resistance": "25"
+    },
+    {
+        "id": 1475091999256,
+        "name": "Sidehev",
+        "groups": "Rygg, skuldre",
+        "resistance": "6"
     }
 ]

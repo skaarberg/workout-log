@@ -29,10 +29,10 @@
         this.setState({liked: !this.state.liked});
       }
       render() {
-        const text = this.state.liked ? 'Valgt' : 'Ikke valgt';
+        const text = this.state.liked ? 'Øvelse valgt' : 'Ikke valgt';
         return (
           <div onClick={this.handleClick}>
-            <b>{text}</b>
+            <b id="cText">{text}</b>
           </div>
         );
       }
@@ -154,7 +154,6 @@
           return (
             <div className="chooseExerciseList">
               {exerciseNodes}
-              <div>TING!</div>
             </div>
           );
         }
@@ -237,13 +236,15 @@
       var ChooseExercise = React.createClass({
         render: function(){
           return (
-            <div className="chooseExercise">
-              <b>{this.props.name}</b>
-              <div id="box">
-                <div id="left">{this.props.groups}</div>
-                <div id='cBtn'><ChosenButton /></div><br />
+            <div id = "chooseE" className="chooseExercise">
+              <div id="chooseECont">
+                <b>{this.props.name}</b>
+                <div id="box">
+                  <div id="left">{this.props.groups}</div>
+                  <div id='cBtn'><ChosenButton /></div><br />
+                </div>
+                <div>{this.props.resistance} kg</div>
               </div>
-              <div>{this.props.resistance} kg</div>
             </div>
           );
         }
