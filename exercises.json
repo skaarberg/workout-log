@@ -34,5 +34,15 @@
         "name": "Sidehev",
         "groups": "Rygg, skuldre",
         "resistance": "6"
+    },
+    {
+        "id": 1475317465781,
+        "name": "Roing med hantler",
+        "groups": "Rygg, biceps"
+    },
+    {
+        "id": 1475317615749,
+        "name": "Pull-up",
+        "groups": "Triceps, skulder, bryst, rygg"
     }
 ]

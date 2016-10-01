@@ -49,7 +49,7 @@
       }
       handleClick() {
         ReactDOM.render(
-          <ExerciseChooseListBox url="/api/exercises"/>,
+          <ExerciseChooseListBox url="/api/exercises" pollInterval={2000}/>,
           document.getElementById('content')
         );
       }
@@ -63,7 +63,7 @@
       }
     }
 
-    // Container som alt fancy ikke-valgbart innhold befinner seg i
+    // Container som alle treningsøkter befinner seg i
     var ExerciseBox = React.createClass({
       loadExercisesFromServer: function() {
         $.ajax({
@@ -119,7 +119,6 @@
             <h1>Exercises:D</h1>
             <ExerciseList data={this.state.data} />
             <WorkoutList data={this.state.workoutData} />
-            <ExerciseForm onExerciseSubmit={this.handleExerciseSubmit} />
             <NewWorkoutButton />
             <ChosenButton />
           </div>
@@ -186,7 +185,7 @@
       // Skjema for å opprette ny treningsøvelse
       var ExerciseForm = React.createClass({
         getInitialState: function() {
-          return {name: '', groups: ''};
+          return {name: '', groups: '', resistance: ''};
         },
         handleNameChange: function(e) {
           this.setState({name: e.target.value});
@@ -194,15 +193,19 @@
         handleGroupsChange: function(e) {
           this.setState({groups: e.target.value});
         },
+        handleResistanceChange: function(e) {
+          this.setState({resistance: e.target.value});
+        },
         handleSubmit: function(e) {
           e.preventDefault();
           var name = this.state.name.trim();
           var groups = this.state.groups.trim();
-          if (!groups || !name) {
+          var resistance = this.state.resistance.trim();
+          if (!groups || !name || !resistance) {
             return;
           }
-          this.props.onExerciseSubmit({name: name, groups: groups});
-          this.setState({name: '', groups: ''});
+          this.props.onExerciseSubmit({name: name, groups: groups, resistance: resistance});
+          this.setState({name: '', groups: '', resistance: ''});
         },
         render: function() {
           return (
@@ -218,6 +221,12 @@
                 placeholder="Muskelgrupper"
                 value={this.state.groups}
                 onChange={this.handleGroupsChange}
+              />
+              <input
+                type="text"
+                placeholder="Vekt"
+                value={this.state.resistance}
+                onChange={this.handleResistanceChange}
               />
               <input type="submit" value="Post" />
             </form>
@@ -284,6 +293,20 @@
             }.bind(this)
           });
         },
+        handleExerciseSubmit: function(exercise) {
+          $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            type: 'POST',
+            data: exercise,
+            success: function(data) {
+              this.setState({data: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        },
         getInitialState: function() {
           return {data: []};
         },
@@ -296,6 +319,7 @@
             <div id="chooseBox" className="exerciseChooseListBox">
               <h1>Liste over tilgjengelige øvelser</h1>
               <ChooseExerciseList data={this.state.data} />
+              <ExerciseForm onExerciseSubmit={this.handleExerciseSubmit} />
             </div>
           );
         }
