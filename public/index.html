@@ -38,6 +38,7 @@
       }
     }
 
+    // Knapp til å opprette ny treningsøkt
     class NewWorkoutButton extends React.Component {
       constructor() {
         super();
@@ -62,6 +63,7 @@
       }
     }
 
+    // Container som alt fancy ikke-valgbart innhold befinner seg i
     var ExerciseBox = React.createClass({
       loadExercisesFromServer: function() {
         $.ajax({
@@ -125,6 +127,7 @@
       }
       });
 
+      // Liste over aktuelle øvelser, enten alle eller utvalgte
       var ExerciseList = React.createClass({
         render: function(){
           var exerciseNodes = this.props.data.map(function(exercise) {
@@ -142,6 +145,7 @@
         }
       });
 
+      // Liste over aktuelle øvelser, med en valgbar-knapp
       var ChooseExerciseList = React.createClass({
         render: function(){
           var exerciseNodes = this.props.data.map(function(exercise) {
@@ -159,6 +163,7 @@
         }
       });
 
+      // Liste over alle treningsøkter
       var WorkoutList = React.createClass({
           render: function(){
             if(this.props.data!=null){
@@ -170,7 +175,6 @@
                 );
               });
             }
-
           return (
             <div className="workoutList">
               {workoutNodes}
@@ -179,6 +183,7 @@
         }
       });
 
+      // Skjema for å opprette ny treningsøvelse
       var ExerciseForm = React.createClass({
         getInitialState: function() {
           return {name: '', groups: ''};
@@ -220,6 +225,7 @@
         }
       });
 
+      // Treningsøvelse
       var Exercise = React.createClass({
         render: function(){
           return (
@@ -233,6 +239,7 @@
         }
       });
 
+      // Valgbar treningsøvelse
       var ChooseExercise = React.createClass({
         render: function(){
           return (
@@ -250,6 +257,7 @@
         }
       });
 
+      // Treningsøkt
       var Workout = React.createClass({
         render: function(){
           return (
@@ -261,6 +269,7 @@
         }
       });
 
+      // Container for alt ang. valgbare øvelser
       var ExerciseChooseListBox = React.createClass({
         loadExercisesFromServer: function() {
           $.ajax({
