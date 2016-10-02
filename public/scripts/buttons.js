@@ -10,17 +10,20 @@ class ChosenButton extends React.Component {
   handleClick() {
     this.setState({liked: !this.state.liked});
     if(!this.state.liked){
-      document.getElementById("cText").style.backgroundColor ='#42f47a';
+      document.getElementById(this.props.name).style.backgroundColor ='#42f47a';
     }
     else{
-      document.getElementById("cText").style.backgroundColor ='#dbc59b';
+      document.getElementById(this.props.name).style.backgroundColor ='#dbc59b';
     }
   }
   render() {
     const text = this.state.liked ? 'Øvelse valgt' : 'Ikke valgt';
     return (
       <div onClick={this.handleClick}>
-        <b id="cText" style={{backgroundColor: '#dbc59b'}}>{text}</b>
+        <b className="chooseBtn" id={this.props.name} style={{backgroundColor: '#dbc59b'}}>{text}</b>
+        <style>
+          float: right;
+        </style>
       </div>
     );
   }

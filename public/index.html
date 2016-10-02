@@ -91,7 +91,7 @@
         render: function(){
           var exerciseNodes = this.props.data.map(function(exercise) {
             return(
-              <Exercise name={exercise.name} key={exercise.id} groups={exercise.groups} resistance={exercise.resistance}>
+              <Exercise name={exercise.name} key={exercise.id} id={exercise.id} groups={exercise.groups} resistance={exercise.resistance}>
                 {exercise.groups}
               </Exercise>
             );
@@ -165,8 +165,7 @@
                 <b>{this.props.name}</b>
                 <div id="box">
                   <div id="left">{this.props.groups}</div>
-                  <div id='cBtn'><ChosenButton /></div><br />
-                  {this.props.key}
+                  <div id='cBtn'><ChosenButton name={this.props.name}/></div><br />
                 </div>
                 <div>{this.props.resistance} kg</div>
               </div>
