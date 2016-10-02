@@ -16,7 +16,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 var EXERCISES_FILE = path.join(__dirname, 'exercises.json');
 var WORKOUTS_FILE = path.join(__dirname, 'workouts.json');
 
@@ -35,16 +34,6 @@ app.use(function(req, res, next) {
     // Disable caching so we'll always get the latest comments.
     res.setHeader('Cache-Control', 'no-cache');
     next();
-});
-
-app.get('/api/comments', function(req, res) {
-  fs.readFile(COMMENTS_FILE, function(err, data) {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-    res.json(JSON.parse(data));
-  });
 });
 
 app.get('/api/exercises', function(req, res) {

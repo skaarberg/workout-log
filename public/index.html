@@ -13,55 +13,9 @@
   </head>
   <body>
     <div id="content"></div>
-    <script type="text/babel" src="scripts/example.js"></script>
+    <script type="text/babel" src="scripts/buttons.js"></script>
+    <script type="text/babel" src="scripts/forms.js"></script>
     <script type="text/babel">
-
-    // Like-button eksempel. Sett inn med <LikeButton />
-    class ChosenButton extends React.Component {
-      constructor() {
-        super();
-        this.state = {
-          liked: false
-        };
-        this.handleClick = this.handleClick.bind(this);
-      }
-      handleClick() {
-        this.setState({liked: !this.state.liked});
-      }
-      render() {
-        const text = this.state.liked ? 'Øvelse valgt' : 'Ikke valgt';
-        return (
-          <div onClick={this.handleClick}>
-            <b id="cText">{text}</b>
-          </div>
-        );
-      }
-    }
-
-    // Knapp til å opprette ny treningsøkt
-    class NewWorkoutButton extends React.Component {
-      constructor() {
-        super();
-        this.state = {
-          liked: false
-        };
-        this.handleClick = this.handleClick.bind(this);
-      }
-      handleClick() {
-        ReactDOM.render(
-          <ExerciseChooseListBox url="/api/exercises" pollInterval={2000}/>,
-          document.getElementById('content')
-        );
-      }
-      render() {
-        const text = "Trykk her for å opprette nytt treningsprogram";
-        return (
-          <div onClick={this.handleClick}>
-            {text}
-          </div>
-        );
-      }
-    }
 
     // Container som alle treningsøkter befinner seg i
     var ExerciseBox = React.createClass({
@@ -71,7 +25,9 @@
           dataType: 'json',
           cache: false,
           success: function(data) {
-            this.setState({data: data});
+            if(this.isMounted()){
+              this.setState({data: data});
+            }
           }.bind(this),
           error: function(xhr, status, err) {
             console.error(this.props.url, status, err.toString());
@@ -112,6 +68,10 @@
         this.loadExercisesFromServer();
         this.loadWorkoutsFromServer();
         setInterval(this.loadExercisesFromServer, this.props.pollInterval);
+      },
+      componentWillUnmount () {
+        this.loadInterval && clearInterval(this.loadInterval);
+        this.loadInterval = false;
       },
       render: function() {
         return (
@@ -182,58 +142,6 @@
         }
       });
 
-      // Skjema for å opprette ny treningsøvelse
-      var ExerciseForm = React.createClass({
-        getInitialState: function() {
-          return {name: '', groups: '', resistance: ''};
-        },
-        handleNameChange: function(e) {
-          this.setState({name: e.target.value});
-        },
-        handleGroupsChange: function(e) {
-          this.setState({groups: e.target.value});
-        },
-        handleResistanceChange: function(e) {
-          this.setState({resistance: e.target.value});
-        },
-        handleSubmit: function(e) {
-          e.preventDefault();
-          var name = this.state.name.trim();
-          var groups = this.state.groups.trim();
-          var resistance = this.state.resistance.trim();
-          if (!groups || !name || !resistance) {
-            return;
-          }
-          this.props.onExerciseSubmit({name: name, groups: groups, resistance: resistance});
-          this.setState({name: '', groups: '', resistance: ''});
-        },
-        render: function() {
-          return (
-            <form className="exerciseForm" onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                placeholder="Navn på øvelse"
-                value={this.state.name}
-                onChange={this.handleNameChange}
-              />
-              <input
-                type="text"
-                placeholder="Muskelgrupper"
-                value={this.state.groups}
-                onChange={this.handleGroupsChange}
-              />
-              <input
-                type="text"
-                placeholder="Vekt"
-                value={this.state.resistance}
-                onChange={this.handleResistanceChange}
-              />
-              <input type="submit" value="Post" />
-            </form>
-          );
-        }
-      });
-
       // Treningsøvelse
       var Exercise = React.createClass({
         render: function(){
@@ -258,6 +166,7 @@
                 <div id="box">
                   <div id="left">{this.props.groups}</div>
                   <div id='cBtn'><ChosenButton /></div><br />
+                  {this.props.key}
                 </div>
                 <div>{this.props.resistance} kg</div>
               </div>
@@ -313,6 +222,10 @@
         componentDidMount: function() {
           this.loadExercisesFromServer();
           setInterval(this.loadExercisesFromServer, this.props.pollInterval);
+        },
+        componentWillUnmount () {
+          this.loadInterval && clearInterval(this.loadInterval);
+          this.loadInterval = false;
         },
         render: function() {
           return (
